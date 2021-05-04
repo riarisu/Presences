@@ -2,10 +2,9 @@ const presence = new Presence({
   clientId: "837305361639538728"
 });
 
-const browsingStamp = Math.floor(Date.now() / 1000);
 let title;
-const actionURL = new URL(document.location.href);
-const title2URL = new URL(document.location.href);
+const browsingStamp = Math.floor(Date.now() / 1000);
+const toURL = new URL(document.location.href);
 
 presence.on("UpdateData", () => {
 
@@ -15,10 +14,10 @@ presence.on("UpdateData", () => {
   presenceData.startTimestamp = browsingStamp;
 
   title = document.querySelector(".firstHeading");
-  const actionResult = actionURL.searchParams.get("action");
-  const title2Result = title2URL.searchParams.get("title");
+  const action2Result = toURL.searchParams.get("action");
+  const title2Result = toURL.searchParams.get("title");
 
-  if (document.location.pathname == "/") {
+  if (document.location.pathname == "/a3/index.php/Main_Page") {
     presenceData.details = "Viewing main page";
     presenceData.startTimestamp = browsingStamp;
   }
@@ -28,7 +27,7 @@ presence.on("UpdateData", () => {
     presenceData.state = title.textContent;
   }
 
-  if (actionResult == "edit" && title2Result){
+  if (action2Result == "edit" && title2Result){
     presenceData.details = "Editing page:";
     if (title2Result.includes("_")) {
       presenceData.state = title2Result.replace(/_/g, " ");
@@ -39,7 +38,7 @@ presence.on("UpdateData", () => {
     presenceData.startTimestamp = browsingStamp;
   }
 
-  if (actionResult == "history" && title2Result){
+  if (action2Result == "history" && title2Result){
     presenceData.details = "Viewing revision history of:";
     if (title2Result.includes("_")) {
       presenceData.state = title2Result.replace(/_/g, " ");
